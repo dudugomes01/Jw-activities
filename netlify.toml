@@ -1,6 +1,6 @@
 [build]
   command = "npx prisma generate && npm run build"
-  publish = ".next"
+  publish = "dist/public"
 
 [build.environment]
   NEXT_TELEMETRY_DISABLED = "1"

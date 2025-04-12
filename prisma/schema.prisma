@@ -1,0 +1,61 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  publicador
+  pioneiro_auxiliar
+  pioneiro_regular
+}
+
+enum ActivityType {
+  campo
+  testemunho
+  cartas
+  estudo
+}
+
+model User {
+  id        Int         @id @default(autoincrement())
+  username  String      @unique
+  email     String      @unique
+  password  String
+  firstName String      @default("")
+  lastName  String      @default("")
+  role      String      @default("publicador")
+  
+  activities Activity[]
+  reminders  Reminder[]
+
+  @@map("users")
+}
+
+model Activity {
+  id      Int       @id @default(autoincrement())
+  userId  Int       @map("user_id")
+  type    String
+  hours   String
+  date    DateTime
+  notes   String?
+  
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("activities")
+}
+
+model Reminder {
+  id          Int       @id @default(autoincrement())
+  userId      Int       @map("user_id")
+  title       String
+  date        DateTime
+  description String?
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("reminders")
+}

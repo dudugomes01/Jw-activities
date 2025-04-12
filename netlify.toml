@@ -2,8 +2,7 @@
   command = "npx prisma generate && npm run build"
   publish = "dist/public"
 
-[build.environment]
-  NEXT_TELEMETRY_DISABLED = "1"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+  [[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

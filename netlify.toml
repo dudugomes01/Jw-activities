@@ -1,8 +1,6 @@
 [build]
-  command = "npx prisma generate && npm run build"
-  publish = "dist/public"
+  command = "npx prisma generate && npm run build:next && npm run build:server"
+  publish = ".next"
 
-  [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
